@@ -207,7 +207,7 @@ function scene_tutorial5(){
         // Params.num_memory = shuffle(num_memory_main);
         flag_practice = false;
         flag_break = true;
-        Time.start();    
+        Time.start();  // real experiment is starting now  
         });    
 }
 

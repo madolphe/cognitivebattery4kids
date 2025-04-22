@@ -196,6 +196,7 @@ function scene_tutorial5() {
 
     //buttons
     button_start.mousePressed(() => {
+        button_start.position(x_start, y_start*1.25);
         button_start.hide();
         // add_hide_cursor_class();
         Params = new ParameterManager();

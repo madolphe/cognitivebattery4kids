@@ -88,9 +88,14 @@ class TimeManager{
         this.starttime_block = Date.now();
       }
     }
+
     start(){
       this.scene = this.scene_mainstart;
       this.starttime_block = Date.now();
+      // here we need to reset Params error count and stimulus counter
+      Params.count_errors = 0;
+      Params.count_nb_pres_stim = 0;
+      Params.next_block_stopping_criterion = false;
     }
   
     repeat(){
@@ -116,8 +121,41 @@ class TimeManager{
           this.scene = this.scene_back;
         }
       }else{
+        // The block has not finished yet, get next_trial
         Params.next_trial();
-        this.scene = this.scene_back;
+        // Params.next_trial() might have trigger a block stopping criterion
+        if(Params.next_block_stopping_criterion){
+           // In that case, we need to call right now the Params.next_block()
+          Params.next_block();
+          // Here we check if the nb of blocks finished equals num_rep 
+          if (Params.repetition == Params.num_rep){
+            // If it's the case, it means
+            if (flag_practice==true){
+              // In practice we should never enter here
+              // This is only reached during tutorial
+              this.scene = this.tutorial_end;
+              button_start.show();
+              remove_hide_cursor_class();
+            }else{
+              // However we should enter here
+              if (flag_break==true){
+                // The flag_break is true if and only if the number of blocks has been reached
+                // This flag is define when the button start is pressed (beginning of previous block)
+                this.scene = this.scene_break;
+                remove_hide_cursor_class();
+                button_start.show();
+              }else{
+                this.scene = this.scene_end;
+                button_end.show();
+                remove_hide_cursor_class();
+              }
+            }
+          }else{
+            this.scene = this.scene_back;
+          } 
+        }else{
+          this.scene = this.scene_back; 
+        }
       }
     }
     
