@@ -13,6 +13,9 @@ from survey_app.models import Answer, Question
 from manager_app.models import ParticipantProfile, Study, ExperimentSession
 from mot_app.models import CognitiveTask, CognitiveResult
 
+import random 
+import copy 
+
 # Let's define several views for each new task in the study:
 @login_required
 def mot_app_task4kids(request):
@@ -108,6 +111,13 @@ def general_tutorial4kids(request):
     if participant.current_session:
         request.session['active_session'] = json.dumps(True)
     parameter_dict = {}
+    shuffle_task_stack(participant)
     return render(request, 'introduction/general_tuto_4kids.html',
                   {"CONTEXT": {"participant": participant, "parameter_dict": parameter_dict}})
 
+def shuffle_task_stack(participant):
+    tasks = copy.deepcopy(participant.task_stack_csv.split(',')[2:])
+    random.shuffle(tasks)
+    list_task_stack_csv =  participant.task_stack_csv.split(',')[:2]+ tasks
+    participant.task_stack_csv = ",".join(list_task_stack_csv)
+    participant.save()
