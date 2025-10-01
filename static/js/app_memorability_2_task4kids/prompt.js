@@ -26,8 +26,8 @@ if(language_code==='fr'){
     text_tutorial_0_2 = "Votre tâche est de vous souvenir de chaque photographie et de répondre si " ;
     text_tutorial_0_3 = "la photographie est présentée deux fois ou non." ;
     text_tutorial_1_0 = "Certaines images apparaîtront deux fois, mais les autres une seule fois.";
-    text_tutorial_1_1 = "Lorsque vous remarquez que l'image est présentée deux fois," ;
-    text_tutorial_1_2 = "veuillez appuyer sur la touche [J] dès que possible" ;
+    text_tutorial_1_1 = "Dès que vous voyez une image que vous avez déjà vue," ;
+    text_tutorial_1_2 = "veuillez appuyer sur la touche [J] dès que possible." ;
     text_tutorial_2_0 = "A chaque essai, vous obtiendrez un retour d'information:" ;
     text_tutorial_2_1 =  "Un rond bleu si c'est correct, une croix rouge sinon." ;
     text_tutorial_3_0 = "Commençons les essais." ;

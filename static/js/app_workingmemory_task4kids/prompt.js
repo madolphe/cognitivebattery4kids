@@ -18,7 +18,7 @@ if(language_code==='fr'){
     text_title_0 = "INSTRUCTIONS" ;
     text_tutorial_0_0 = "Le but de cette expérience est de mesurer votre capacité de mémoire.";
     text_tutorial_0_1 = "A chaque essai, vous verrez d'abord la séquence de changements de couleur " ;
-    text_tutorial_0_2 = "pour les 16 objets. Votre tâche est de vous souvenir de ces changements et " ;
+    text_tutorial_0_2 = "pour les 16 cases. Votre tâche est de vous souvenir de ces changements et " ;
     text_tutorial_0_3 = "de signaler leur ordre de présentation en cliquant sur les boutons." ;
     text_tutorial_1_0 = "Ceci est un exemple de présentation de stimulus." ;
     text_tutorial_2_0 = "Votre tâche consiste à cliquer sur les boutons dans l'ordre de présentation que vous avez vu" ;
