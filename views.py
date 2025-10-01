@@ -110,8 +110,9 @@ def general_tutorial4kids(request):
     # If participant has a session assigned, set request.session.active_session to True
     if participant.current_session:
         request.session['active_session'] = json.dumps(True)
-    parameter_dict = {}
-    shuffle_task_stack(participant)
+    parameter_dict = {}    
+    # In the future, if we need the stack to be random, uncomment the following line:
+    # shuffle_task_stack(participant)
     return render(request, 'introduction/general_tuto_4kids.html',
                   {"CONTEXT": {"participant": participant, "parameter_dict": parameter_dict}})
 
