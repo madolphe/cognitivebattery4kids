@@ -33,7 +33,7 @@
 {% block content%}
     <div class="side-panel">
         <h2>{% trans "Salut" %}, {{CONTEXT.participant.user.username}} !</h2>
-        <p>{% trans ", vous pouvez voir votre progression dans l'expérience" %}</p>
+        <p>{% trans "Ici, visualise ta progression dans les exercices à faire:" %}</p>
         <div class="side-info">
             <div class="content">
                 {% include "includes/study_progression.html" with info=CONTEXT.participant.progress_info %}
@@ -69,8 +69,7 @@
                     <div class="row">
                             <br />
                         {% blocktrans %}
-                            Quand vous êtes prêt, appuyez sur le bouton "démarrer" en dessous. Vous suivrez un tutoriel rapide
-                            puis vous pourrez pratiquer la tâche.
+                            Quand tu es prêt·e, appuie sur le bouton « Démarrer » juste en dessous. Tu verras un petit tutoriel, puis tu pourras t’entraîner dans la tâche.
                         {% endblocktrans %}
                     </div>
                 </div>

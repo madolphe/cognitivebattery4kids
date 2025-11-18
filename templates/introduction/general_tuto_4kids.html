@@ -13,7 +13,7 @@
         {% get_current_language as LANGUAGE_CODE %}
         <div class="side-panel" style="visibility: hidden; z-index: 1">
             <h2>{% trans "Salut" %}, {{CONTEXT.participant.user.username}} !</h2>
-            <p>{% trans "Ici, vous pouvez voir votre progression dans l'expérience" %}</p>
+            <p>{% trans "Ici, visualise ta progression dans les exercices à faire:" %}</p>
             <div class="side-info">
                 <div class="content">
                     {% include "includes/study_progression.html" with info=CONTEXT.participant.progress_info %}
@@ -33,24 +33,22 @@
             </div>
             <div class="general_instructions_bubble bubble">
                 <div class="text" id="0">
-                    {% trans "Bonjour, je suis le docteur Flowers! Je serai votre accompagnant durant toute l'expérience. " %}
+                    {% trans "Bonjour ! Je suis le docteur Flowers et je vais t’accompagner pendant toute l’expérience." %}
                     <br>
-                    {% trans " Tout d'abord, merci de votre participation. Je vous propose de commencer par vous familiariser avec l'interface."%}
+                    {% trans " Merci beaucoup de participer ! Nous allons d’abord découvrir ensemble comment fonctionne l’écran."%}
                     <br>
-                    <i>{% trans "Cliquez sur le bouton suivant pour la suite des explications." %}</i>
+                    <i>{% trans "Quand tu es prêt·e, clique sur le bouton  'Suivant' pour continuer." %}</i>
                 </div>
                 <div class="text" style="display:none" id="1">
-                    {% trans "Sur votre gauche, dans l'encadré rouge, vous pouvez observer l'ensemble des activités à effectuer durant la session. La flèche rouge propose un court descriptif de l'activité en cours." %}
+                    {% trans "À gauche, dans le cadre rouge, tu peux voir la liste de toutes les activités que tu vas faire pendant la session. La petite flèche rouge te montre une courte explication de l’activité que tu es en train de faire." %}
                 </div>
                 <div class="text" style="display:none" id="2">
-                    {% trans "En bas du panneau, le bouton 'Se déconnecter' permet de quitter l'expérience !"%}
+                    {% trans "En bas du panneau, le bouton 'Se déconnecter' te permet de quitter la session d'exercice."%}
                 </div>
                 <div class="text" style="display:none" id="3">
-                    {% trans "Je vous rappelle que la durée totale de l'expérience est de 30 minutes."%}
-                    {% trans "Celle-ci sera composée de différentes activités cognitives."%}
-                    {% trans "Durant la pratique des activités cognitives, nous vous demandons de vous tenir à 50 cm de votre écran."%}
-                    {% trans "Nous vous demandons également de rester concentré durant la passation des activités, n'écoutez pas de musique et n'effectuez pas d'autres activités en parallèle."%}
-                    {% trans "Vous allez maintenant pouvoir commencer, à vous de jouer !"%}
+                    {% trans "Je te rappelle que la durée totale des exercices est de 30 minutes."%}
+                    {% trans " Pendant les activités, essaie de rester à environ 50 centimètres de ton écran, comme si tu tendais un bras devant toi. Reste bien concentré·e : ne mets pas de musique et ne fais pas autre chose en même temps."%}
+                    {% trans "Tu es prêt·e ? Alors c’est parti ! À toi de jouer!"%}
                 </div>
                 <div class="container-btn">
                     <button class="btn" style="display:none;" value="Previous" id="previous_btn" onclick="previous_button_click()">{% trans "Précédent" %}</button>
