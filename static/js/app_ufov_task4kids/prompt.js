@@ -15,50 +15,50 @@ if (language_code === 'fr') {
     prompt_gratitude = "Merci d'avoir participé à l'expérience";
     prompt_button_end = "FIN";
     // TASK
-    text_start = "Veuillez cliquer sur la souris pour commencer cette expérience";
+    text_start = "Clique sur la souris pour commencer l’activité.";
     text_end = "Merci de participer à l'expérience";
     text_button_next = "Suivant";
     text_button_previous = "Précédent";
     text_button_start = "Démarrer";
-    text_press_bar = "Appuyez sur la barre espace pour débuter la tâche";
+    text_press_bar = "Appuie sur la barre d’espace pour commencer la tâche.";
 
     // TUTORIAL
     text_title_0 = "INSTRUCTIONS";
-    text_completed_practice = "Vous avez terminé cet exercice!";
-    text_completed_practice_2 = "Appuyez sur suivant pour continuer.";
+    text_completed_practice = "Tu as terminé cet exercice!";
+    text_completed_practice_2 = "Appuie sur suivant pour continuer.";
 
-    text_tutorial_0_0 = "Cette tâche vous demande de vous concentrer sur des objets";
-    text_tutorial_0_1 = "affichés à l'écran. Nous allons vous expliquer les règles pas à pas.";
+    text_tutorial_0_0 = "Dans cette tâche, tu dois te concentrer sur les objets qui apparaissent à l’écran. ";
+    text_tutorial_0_1 = "Nous allons t’expliquer les règles pas à pas.";
 
-    text_tutorial_1_0 = "Au milieu de l'écran, un visage sera affiché rapidement.";
-    text_tutorial_1_1 = "Ce visage aura soit des cheveux courts (gauche) ou longs (droite).";
-    text_tutorial_1_2 = "Vous devez retrouver celui qui présenté.";
+    text_tutorial_1_0 = "Au centre de l’écran, un visage va apparaître très vite.";
+    text_tutorial_1_1 = "Il pourra avoir les cheveux courts (à gauche) ou les cheveux longs (à droite).";
+    text_tutorial_1_2 = "Ton rôle est de dire lequel des deux a été montré.";
 
-    text_tutorial_2_0 = "Positionnez vos doigts sur les touches G et H du clavier.";
-    text_tutorial_2_1 = "Cheveux courts = cliquez sur la touche G.";
-    text_tutorial_2_2 = "Cheveux longs = cliquez sur la touche H.";
+    text_tutorial_2_0 = "Place tes doigts sur les touches G et H du clavier.";
+    text_tutorial_2_1 = "Cheveux courts → appuie sur G.";
+    text_tutorial_2_2 = "Cheveux longs → appuie sur H.";
 
-    text_tutorial_3_0 = "Une étoile apparaîtra sur l'une des 8 directions possibles.";
-    text_tutorial_3_1 = "Il vous est demandé de vous rappeler la direction dans laquelle l'objet est apparu.";
-    text_tutorial_3_2 = "Les 8 directions possibles sont numérotées le long des lignes ci-dessus.";
+    text_tutorial_3_0 = "Une étoile va apparaître dans l’une des 8 directions possibles";
+    text_tutorial_3_1 = " autour du centre de l’écran. Tu dois te souvenir où l’étoile est apparue.";
+    text_tutorial_3_2 = "Les 8 directions sont numérotées le long des lignes que tu vois au-dessus.";
 
-    text_tutorial_4_0 = "Après que l'étoile soit apparue, cliquez sur la ligne correspondante.";
-    text_tutorial_4_1 = "Un cercle bleu (correct) ou une croix rouge (incorrect) apparaît à l'endroit où vous cliquez.";
-    text_tutorial_4_2 = "Si rien n'apparaît, la position cliquée n'appartient pas à la zone de jeu.";
-    text_tutorial_4_3 = "Pratiquez quelques essais!";
+    text_tutorial_4_0 = "Quand l’étoile a disparu, clique sur la ligne qui correspond à l’endroit où elle est apparue.";
+    text_tutorial_4_1 = "Si tu as juste, un cercle bleu s’affichera. Si tu te trompes, une croix rouge apparaîtra.";
+    text_tutorial_4_2 = "Si rien ne s’affiche, c’est que tu as cliqué en dehors de la zone de jeu.";
+    text_tutorial_4_3 = "Fais quelques essais pour t’entraîner !";
 
-    text_tutorial_5_0 = "Dans la tâche réelle, l'étoile et le visage apparaîssent en même temps.";
-    text_tutorial_5_1 = "Essayez de les observer ensemble!";
-    text_tutorial_5_2 = "Pratiquez quelques essais avant de continuer.";
+    text_tutorial_5_0 = "Dans l'exercice réel, l’étoile et le visage apparaissent en même temps.";
+    text_tutorial_5_1 = "Essaie de bien les regarder tous les deux !";
+    text_tutorial_5_2 = "Fais quelques essais pour t’entraîner avant de continuer.";
 
-    text_tutorial_6_0 = "Augmentons une dernière fois la difficulté en ajoutant des carrés blancs.";
-    text_tutorial_6_1 = "Votre mission est de les ignorer!";
-    text_tutorial_6_2 = "Retrouvez l'emplacement de l'étoile.";
-    text_tutorial_6_3 = "Pratiquez quelques essais avant de continuer.";
+    text_tutorial_6_0 = "Nous allons rendre la tâche plus difficile en ajoutant des carrés blancs.";
+    text_tutorial_6_1 = "Ta mission est de ne pas les regarder : ignore-les !";
+    text_tutorial_6_2 = "Souviens-toi seulement de l’endroit où l’étoile apparaît.";
+    text_tutorial_6_3 = "Fais quelques essais avant de continuer.";
 
-    text_tutorial_start_0 = "Vous avez suivi l'ensemble des consignes";
-    text_tutorial_start_1 = "C'est maintenant le moment de jouer!";
-    text_tutorial_start_2 = "Quand vous êtes prêts appuyez sur le bouton démarrer!";
+    text_tutorial_start_0 = "Tu as maintenant vu toutes les consignes.";
+    text_tutorial_start_1 = "C’est le moment de jouer !";
+    text_tutorial_start_2 = "Quand tu es prêt·e, appuie sur le bouton « Démarrer » !";
 } else {
     button_end_label = "Wait...";
     prompt_start = "Please click the mouse to start this experiment";

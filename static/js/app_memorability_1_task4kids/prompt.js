@@ -17,25 +17,28 @@ if(language_code==='fr'){
     prompt_button_end = "END";
     prompt_button_restart = "Redémarrer";
   // Tâche
-    text_start = "Veuillez cliquer sur la souris pour commencer cette expérience" ;
+    text_start = "Clique sur la souris pour commencer l’activité." ;
     text_end = "Merci de participer à l'expérience" ;
     // TUTORIAL
     text_title_0 = "INSTRUCTIONS" ;
-    text_tutorial_0_0 = "Le but de cette expérience est de mesurer votre capacité de mémoire." ;
-    text_tutorial_0_1 = "A chaque essai, vous verrez un ensemble de photographies une par une." ;
-    text_tutorial_0_2 = "Votre tâche est de vous souvenir de chaque photographie et de répondre si " ;
-    text_tutorial_0_3 = "la photographie est présentée deux fois ou non." ;
-    text_tutorial_1_0 = "Certaines images apparaîtront deux fois, mais les autres une seule fois.";
-    text_tutorial_1_1 = "Dès que vous voyez une image que vous avez déjà vue," ;
-    text_tutorial_1_2 = "veuillez appuyer sur la touche [J] dès que possible." ;
-    text_tutorial_2_0 = "A chaque essai, vous obtiendrez un retour d'information:" ;
-    text_tutorial_2_1 =  "Un rond bleu si c'est correct, une croix rouge sinon." ;
+    text_tutorial_0_0 = "Le but de cette activité est de mesurer ta mémoire." ;
+    text_tutorial_0_1 = "À chaque essai, tu verras plusieurs photos, une par une." ;
+    text_tutorial_0_2 = "Ta tâche est de te souvenir de chaque photo et de dire si" ;
+    text_tutorial_0_3 = "une photo apparaît deux fois ou non." ;
+
+    text_tutorial_1_0 = "Certaines images vont apparaître deux fois, et les autres une seule fois.";
+    text_tutorial_1_1 = "Dès que tu vois une image que tu as déjà vue, " ;
+    text_tutorial_1_2 = "appuie sur la touche [J] le plus vite possible." ;
+    text_tutorial_2_0 = "À chaque essai, tu recevras un petit retour :" ;
+    text_tutorial_2_1 =  "un rond bleu si ta réponse est correcte, une croix rouge si elle ne l’est pas." ;
+
     text_tutorial_3_0 = "Commençons les essais." ;
     text_tutorial_4_0 = "Commençons l'expérience principale." ;
     text_tutorial_5_0 = "Temps de pause." ;
-    text_tutorial_6_1 = "Merci pour votre effort. Lorsque vous êtes prêt," ;
-    text_tutorial_6_2 = "veuillez cliquer sur le bouton de démarrage pour redémarrer" ;
-    text_tutorial_6_3 = "Complètez encore" ;
+    text_tutorial_6_1 = "Merci pour tes efforts ! Quand tu es prêt·e," ;
+    text_tutorial_6_2 = "clique sur le bouton « Démarrer » pour recommencer." ;
+
+    text_tutorial_6_3 = "Il te reste encore" ;
     text_tutorial_6_4 = " bloc(s) pour finir le jeu." ;
     text_button_next = "Suivant";
     text_button_previous = "Précédent";

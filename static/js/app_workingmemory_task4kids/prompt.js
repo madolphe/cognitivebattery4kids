@@ -9,28 +9,30 @@ let button_end_label;
 
 if(language_code==='fr'){
     button_end_label = "Attendez...";
-    prompt_start = "Cliquez sur la souris pour débuter l'activité";
+    prompt_start = "Clique sur la souris pour commencer l’activité.";
     prompt_gratitude = "Merci d'avoir participé à l'expérience";
     prompt_button_end = "FIN";
     prompt_button_restart = "Redémarrer";
     prompt_button_click = "Cliquer dans l'ordre";
     // TUTORIAL
     text_title_0 = "INSTRUCTIONS" ;
-    text_tutorial_0_0 = "Le but de cette expérience est de mesurer votre capacité de mémoire.";
-    text_tutorial_0_1 = "A chaque essai, vous verrez d'abord la séquence de changements de couleur " ;
-    text_tutorial_0_2 = "pour les 16 cases. Votre tâche est de vous souvenir de ces changements et " ;
-    text_tutorial_0_3 = "de signaler leur ordre de présentation en cliquant sur les boutons." ;
-    text_tutorial_1_0 = "Ceci est un exemple de présentation de stimulus." ;
-    text_tutorial_2_0 = "Votre tâche consiste à cliquer sur les boutons dans l'ordre de présentation que vous avez vu" ;
+    text_tutorial_0_0 = "Le but de cette activité est de mesurer ta mémoire.";
+    
+    text_tutorial_0_1 = "À chaque essai, tu verras une suite de changements de couleur sur les" ;
+    text_tutorial_0_2 = "16 cases. Ton rôle est de retenir l’ordre dans lequel les couleurs apparaissent, " ;
+    text_tutorial_0_3 = "puis de cliquer sur les boutons pour retrouver cet ordre." ;
+
+    text_tutorial_1_0 = "Voici un exemple de ce que tu vas voir à l’écran." ;
+    text_tutorial_2_0 = "Reproduis l'ordre de la colorisation des cases." ;
     text_tutorial_3_0 = "Commençons les exercices." ;
     text_tutorial_4_0 = "Commençons l'expérience principale." ;
     text_tutorial_5_0 = "Temps de pause." ;
-    text_tutorial_6_1 = "Merci pour votre effort. Lorsque vous êtes prêts, " ;
-    text_tutorial_6_2 = "veuillez cliquer sur le bouton de démarrage pour redémarrer." ;
-    text_tutorial_6_3 = "Complètez encore" ;
+    text_tutorial_6_1 = "Merci pour tes efforts ! Quand tu es prêt·e, " ;
+    text_tutorial_6_2 = "clique sur le bouton « Démarrer » pour recommencer." ;
+    text_tutorial_6_3 = "Il te reste encore" ;
     text_tutorial_6_4 = " bloc(s) pour finir le jeu." ;
     // TASK
-    text_start = "Veuillez cliquer sur la souris pour commencer cette expérience." ;
+    text_start = "Clique sur la souris pour commencer l’activité." ;
     text_end = "Merci de participer à l'expérience." ;
     text_button_next = "Suivant";
     text_button_previous = "Précédent";

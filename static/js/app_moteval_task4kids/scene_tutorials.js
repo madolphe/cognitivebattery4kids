@@ -18,6 +18,7 @@ function scene_tutorial1() {
     text(text_tutorial_0_1, pos_tutorialtext_x, pos_tutorialtext_y - shift_text);
     text(text_tutorial_0_2, pos_tutorialtext_x, pos_tutorialtext_y);
     text(text_tutorial_0_3, pos_tutorialtext_x, pos_tutorialtext_y + shift_text);
+    text(text_tutorial_0_4, pos_tutorialtext_x, pos_tutorialtext_y + 2* shift_text);
     pop();
     //button
     button_next.mousePressed(() => {
@@ -125,6 +126,7 @@ function scene_tutorial3() {
     text(text_tutorial_2_0, pos_tutorialtext_x2, pos_tutorialtext_y2);
     text(text_tutorial_2_1, pos_tutorialtext_x2, pos_tutorialtext_y2_1);
     text(text_tutorial_2_2, pos_tutorialtext_x2, pos_tutorialtext_y2_2);
+    text(text_tutorial_2_3, pos_tutorialtext_x2, pos_tutorialtext_y2_3);
     pop();
 
     //buttons

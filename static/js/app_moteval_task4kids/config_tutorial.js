@@ -42,6 +42,7 @@ let pos_tutorialtext_x2 = Pos.center_x;
 let pos_tutorialtext_y2 = Pos.center_y+Math.round(-0.02*Pos.canvas_height);
 let pos_tutorialtext_y2_1 = Pos.center_y+Math.round(0.03*Pos.canvas_height);
 let pos_tutorialtext_y2_2 = Pos.center_y+Math.round(0.08*Pos.canvas_height);
+let pos_tutorialtext_y2_3 = Pos.center_y+Math.round(0.12*Pos.canvas_height);
 
 //scene 3
 let size_tutorialtext3 = Math.round(0.04*Pos.canvas_height);
@@ -60,9 +61,9 @@ let size_start_text = Math.round(0.02*Pos.canvas_height);
 let size_bubble_x = Math.round(0.38*Pos.canvas_height);
 let size_bubble_y = Math.round(0.08*Pos.canvas_height);
 let pos_bubble_y = Pos.center_y + Math.round(0.150*Pos.canvas_height);
-let pos_bubble_y1 = Pos.center_y + Math.round(0.25*Pos.canvas_height); 
-let pos_bubble_y2 = Pos.center_y + Math.round(0.2*Pos.canvas_height);
-let pos_bubble_y3 = Pos.center_y + Math.round(0.12*Pos.canvas_height);
+let pos_bubble_y1 = Pos.center_y + Math.round(0.27*Pos.canvas_height); 
+let pos_bubble_y2 = Pos.center_y + Math.round(0.20*Pos.canvas_height);
+let pos_bubble_y3 = Pos.center_y + Math.round(0.17*Pos.canvas_height);
 
 let pos_researcher_x = window_availw/3.9;
 let pos_researcher_y = 4*window_availh/5;

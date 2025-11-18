@@ -172,7 +172,7 @@ function manage_practice_tutorial6() {
 // Stage 4:
 function scene_tutorial7() {
     //image
-    draw_character(researcher_1, pos_researcher_x, pos_researcher_y, researcher_width, researcher_width);
+    draw_character(researcher_1, pos_researcher_x3, pos_researcher_y, researcher_width, researcher_width);
     draw_background_bubble(Pos.center_x, pos_bubble_y2, size_bubble_x, size_bubble_y);
     //text
     push();
@@ -180,7 +180,7 @@ function scene_tutorial7() {
     textSize(size_tutorialtext_y2);
     noStroke();
     textAlign(CENTER);
-    text(text_tutorial_6_0, pos_tutorialtext_x1, pos_tutorialtext_y2 - 3 * shift_text_y2);
+    text(text_tutorial_4_0, pos_tutorialtext_x1, pos_tutorialtext_y2 - 3 * shift_text_y2);
     text(text_tutorial_6_1, pos_tutorialtext_x1, pos_tutorialtext_y2 - 2 * shift_text_y2);
     text(text_tutorial_6_2, pos_tutorialtext_x1, pos_tutorialtext_y2 - 1 * shift_text_y2);
     pop();
@@ -191,7 +191,7 @@ function scene_tutorial7() {
 }
 
 function scene_tutorial8() {
-    draw_character(researcher_1, pos_researcher_x, pos_researcher_y, researcher_width, researcher_width);
+    draw_character(researcher_1, pos_researcher_x3, pos_researcher_y, researcher_width, researcher_width);
     draw_background_bubble(Pos.center_x, pos_bubble_y2, size_bubble_x, size_bubble_y);
     //text
     push();
@@ -296,7 +296,7 @@ function display_completion_tutorial_practice() {
 // Last scene to start the game:
 function scene_tutorial9() {
     button_start.show();
-    draw_character(researcher_3, pos_researcher_x, pos_researcher_y, researcher_width, researcher_width);
+    draw_character(researcher_3, pos_researcher_x3, pos_researcher_y, researcher_width, researcher_width);
     draw_background_bubble(Pos.center_x, pos_bubble_y_start, size_bubble_x, size_bubble_y);
     push();
     fill(col_tutorialtext);
