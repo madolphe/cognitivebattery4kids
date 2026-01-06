@@ -1,0 +1,81 @@
+{% extends "base_admin.html" %}
+{% load admin_extras %}
+
+{% block title %}Administration – Réponses{% endblock %}
+
+{% block content %}
+<p>
+  {{ page_obj.paginator.count }} participants —
+  Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+</p>
+<div class="card card-lg">
+  <h1>Taille d'écran pour l'étude {{ study.name }}</h1>
+  <p>
+    Modifiez ici la taille d'écran (en cm) rapportée par les participants lors de l'étude. Les valeurs sont généralement situées entre 25cm (10 pouces) et 80cm (30 pouces). Des usages spécifiques peuvent nécessiter des tailles d'écran allant jusqu'à 100cm (40 pouces). Attention entre 17cm (7 pouces) et 25cm (10 pouces), il est possible que l'utilisateur ait confondu les unités (pouces vs cm) ou qu'il soit sur téléphone ou tablette (ce qui n'est pas autorisé pour cette étude).
+  </p>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Participant</th>
+        <th>Réponse actuelle (en cm)</th>
+        <th>Nouvelle valeur (en cm)</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in page_obj %}
+      <tr>
+        <td>{{ p.user.username }}</td>
+
+        <td>
+          {% with val=answers_map|get_item:p.user.username %}
+            {% if val is not None %}
+              {{ val }}
+            {% else %}
+              Aucune réponse
+            {% endif %}
+          {% endwith %}
+        </td>
+
+        <td>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="participant_username" value="{{ p.user.username }}">
+            <input type="hidden" name="page" value="{{ page_obj.number }}">
+            <input type="number" step="any" name="diag_size" placeholder="Nouvelle valeur" required>
+        </td>
+
+        <td>
+            <button class="btn btn-primary" type="submit">
+              Modifier
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{# navigation pagination #}
+<nav class="pagination">
+  {% if page_obj.has_previous %}
+    <a class="btn" href="?page=1">« Début</a>
+    <a class="btn" href="?page={{ page_obj.previous_page_number }}">‹ Précédent</a>
+  {% else %}
+    <button class="btn" disabled>« Début</button>
+    <button class="btn" disabled>‹ Précédent</button>
+  {% endif %}
+
+  <span class="pagination-info">
+    Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+  </span>
+
+  {% if page_obj.has_next %}
+    <a class="btn" href="?page={{ page_obj.next_page_number }}">Suivant ›</a>
+    <a class="btn" href="?page={{ page_obj.paginator.num_pages }}">Fin »</a>
+  {% else %}
+    <button class="btn" disabled>Suivant ›</button>
+    <button class="btn" disabled>Fin »</button>
+  {% endif %}
+</nav>
+</div>
+{% endblock %}

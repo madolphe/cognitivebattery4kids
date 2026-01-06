@@ -12,6 +12,11 @@ from django.urls import reverse
 from survey_app.models import Answer, Question
 from manager_app.models import ParticipantProfile, Study, ExperimentSession
 from mot_app.models import CognitiveTask, CognitiveResult
+from manager_app.utils import is_admin_team, _get_user_study
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages as django_messages
+from django.core.paginator import Paginator
+
 
 import random 
 import copy 
@@ -122,3 +127,49 @@ def shuffle_task_stack(participant):
     list_task_stack_csv =  participant.task_stack_csv.split(',')[:2]+ tasks
     participant.task_stack_csv = ",".join(list_task_stack_csv)
     participant.save()
+
+
+# Admin pannels:
+
+@user_passes_test(lambda u: is_admin_team(u))
+def admin_change_screen_size(request):
+    study = _get_user_study(request.user)
+    participants = ParticipantProfile.objects.filter(study=study)
+    # Pagination
+    paginator = Paginator(participants, 10)  # 15 participants per page
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
+    # Handle POST request to update screen size
+    if request.method == "POST":
+        participant_to_update = request.POST.get('participant_username')
+        diag_size = request.POST.get('diag_size')
+        # on conserve la page courante
+        current_page = request.POST.get("page", page_obj.number)
+        if not diag_size:
+            django_messages.error(request, "Nouvelle taille d'écran non fournie.")
+            return redirect(f"{request.path}?page={current_page}")
+        try:
+            numeric_size = float(diag_size)
+            ans = Answer.objects.get(participant__user__username=participant_to_update,question__handle='prof-mot-1')
+            ans.value = numeric_size
+            ans.save()
+        except Answer.DoesNotExist:
+            django_messages.error(request, 'Participant ou réponse introuvable.')
+            return redirect(f"{request.path}?page={current_page}")
+        except (TypeError, ValueError):
+            django_messages.error(
+                request,
+                "La valeur fournie n’est pas un nombre valide."
+            )
+            return redirect(f"{request.path}?page={current_page}")
+        django_messages.success(request, f'Taille d\'écran mise à jour pour {participant_to_update}.')
+    answers = Answer.objects.filter(question__handle='prof-mot-1', participant__in=participants)
+    answers_map = {
+        a.participant.user.username: a.value
+        for a in answers
+    }
+    return render(request, "admin/admin_change_screen_size.html", {
+        "participants": participants,
+        "answers_map": answers_map,
+        "page_obj": page_obj
+    })

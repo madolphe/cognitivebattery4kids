@@ -10,5 +10,6 @@ urlpatterns = [
     path('memorability2_app', views.memorability2_task4kids, name='memorability2_app'),
     path('workingmemory_app', views.workingmemory_task4kids, name='workingmemory_app'),
     path('cognitive_task4kids', views.cognitive_task4kids, name='cognitive_task4kids'),
-    path('exit_view_cognitive_task4kids', views.exit_view_cognitive_task4kids, name='exit_cognitive_task4kids')
+    path('exit_view_cognitive_task4kids', views.exit_view_cognitive_task4kids, name='exit_cognitive_task4kids'),
+    path('admin_change_screen_size', views.admin_change_screen_size, name='admin_change_screen_size')
 ]
