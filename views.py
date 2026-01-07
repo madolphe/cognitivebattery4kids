@@ -16,32 +16,41 @@ from manager_app.utils import is_admin_team, _get_user_study
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages as django_messages
 from django.core.paginator import Paginator
+from django.utils import timezone
+from django.views.decorators.cache import never_cache
+from django.utils.dateparse import parse_datetime
 
 
 import random 
 import copy 
 
 # Let's define several views for each new task in the study:
+
+@never_cache
 @login_required
 def mot_app_task4kids(request):
     current_task_name = "moteval"
     return launch_task(request,current_task_name, show_progress=False)
 
+@never_cache
 @login_required
 def ufov_task4kids(request):
     current_task_name = "ufov"
     return launch_task(request,current_task_name, show_progress=False)  
 
+@never_cache
 @login_required
 def workingmemory_task4kids(request):
     current_task_name = "workingmemory"
     return launch_task(request,current_task_name, show_progress=False) 
 
+@never_cache
 @login_required
 def memorability1_task4kids(request):
     current_task_name = "memorability_1"
     return launch_task(request,current_task_name, show_progress=False) 
 
+@never_cache
 @login_required
 def memorability2_task4kids(request):
     current_task_name = "memorability_2"
@@ -54,7 +63,9 @@ def launch_task(request, current_task_name, show_progress=True):
     participant = ParticipantProfile.objects.get(user=request.user.id)
     participant.extra_json["current_task"] = current_task_name
     idx = participant.extra_json.get("current_idx_task", -1)
-    participant.extra_json["current_idx_task"] = idx + 1
+    nb_tasks = 5  # Total number of tasks in the pre/post battery
+    participant.extra_json["current_idx_task"] = nb_tasks - len(participant.task_stack_csv.split(','))
+    participant.extra_json['start_time_task'] = timezone.now().astimezone(timezone.utc).isoformat()
     participant.save()
     screen_params = Answer.objects.get(participant=participant, question__handle='prof-mot-1').value
     current_task_object = CognitiveTask.objects.values().get(name=current_task_name)
@@ -67,6 +78,7 @@ def launch_task(request, current_task_name, show_progress=True):
                                'screen_params': screen_params,
                                'show_progress': show_progress}})
 
+@never_cache
 @login_required
 def cognitive_task4kids(request):
     """
@@ -91,6 +103,19 @@ def exit_view_cognitive_task4kids(request):
     if 'csrfmiddlewaretoken' in data:
         del data['csrfmiddlewaretoken']
     participant = ParticipantProfile.objects.get(user=request.user.id) 
+    start = participant.extra_json.get('start_time_task', None)
+    if start:
+        start_dt = parse_datetime(start)
+        end_dt = timezone.now().astimezone(timezone.utc)
+        duration = (end_dt - start_dt).total_seconds() / 60.0  # duration in minutes
+    else:
+        duration = None
+    p_durations = participant.extra_json.get("tasks_duration")
+    if not isinstance(p_durations, list):
+        p_durations = []
+    p_durations.append(duration)
+    participant.extra_json["tasks_duration"] = p_durations
+    participant.save()
     task_name = participant.extra_json["current_task"] 
     task = CognitiveTask.objects.get(name=task_name)
     idx = participant.extra_json["current_idx_task"]
