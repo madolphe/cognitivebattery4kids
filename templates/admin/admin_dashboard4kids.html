@@ -1,0 +1,83 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Admin – Dashboard participants{% endblock %}
+
+{% block content %}
+<div class="card card-xl">
+  <h1>Dashboard participants</h1>
+  <p>Total participants : {{ total_participants }}</p>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Participant</th>
+        <th>Inscription</th>
+        <th>Statut</th>
+        <th>Tâches restantes</th>
+        <th>Durées tâches (min)</th>
+        <th>Dates tâches</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for username, row in dashboard_data.items %}
+      <tr>
+        <td><strong>{{ username }}</strong></td>
+
+        <td>
+          {% if row.inscription_date %}
+            {{ row.inscription_date }}
+          {% else %}
+            No date
+          {% endif %}
+        </td>
+
+        <td>
+          {% if row.completed == 1 %}
+            <span class="badge badge-success">Complété</span>
+          {% elif row.completed == 0 %}
+            <span class="badge badge-warning">Problème</span>
+          {% else %}
+            <span class="badge badge-muted">En cours</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if row.remaining_tasks and row.remaining_tasks|length > 0 %}
+            <ul class="compact-list">
+              {% for rt in row.remaining_tasks %}
+                <li>{{ rt }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <span class="muted">Aucune</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if row.tasks_duration and row.tasks_duration|length > 0 %}
+            <div class="pill-list">
+              {% for d in row.tasks_duration %}
+                <span class="pill">{{ d }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            <span class="muted">—</span>
+          {% endif %}
+        </td>
+
+        <td>
+          {% if row.dates_tasks and row.dates_tasks|length > 0 %}
+            <ul class="compact-list">
+              {% for dt in row.dates_tasks %}
+                <li>{{ dt }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <span class="muted">—</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

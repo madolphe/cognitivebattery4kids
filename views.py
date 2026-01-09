@@ -115,6 +115,11 @@ def exit_view_cognitive_task4kids(request):
         p_durations = []
     p_durations.append(duration)
     participant.extra_json["tasks_duration"] = p_durations
+    p_dates = participant.extra_json.get("dates_tasks")
+    if not isinstance(p_dates, list):
+        p_dates = []
+    p_dates.append(timezone.now().astimezone(timezone.utc).isoformat())
+    participant.extra_json["dates_tasks"] = p_dates
     participant.save()
     task_name = participant.extra_json["current_task"] 
     task = CognitiveTask.objects.get(name=task_name)
@@ -198,3 +203,34 @@ def admin_change_screen_size(request):
         "answers_map": answers_map,
         "page_obj": page_obj
     })
+
+@user_passes_test(lambda u: is_admin_team(u))
+def admin_dashboard4kids(request):
+    study = _get_user_study(request.user)
+    participants = ParticipantProfile.objects.filter(study=study)
+    total_participants = participants.count()
+    dashboard_row = {}
+    for p in participants:
+        p_row = {}
+        # Get tasks duration from extra_json
+        tasks_duration = p.extra_json.get("tasks_duration", [])
+        p_row["tasks_duration"] = tasks_duration
+        # Check for completion
+        if len(p.task_stack_csv.split(','))==0:
+            completed = 1
+            if len(tasks_duration) < 5:
+                completed = 0
+        else:
+            completed = -1
+        p_row["completed"] = completed
+        # Get inscription date
+        p_row["inscription_date"] = p.extra_json.get("origin_timestamp", "No date")
+        # Get remaining tasks
+        p_row["remaining_tasks"] = p.task_stack_csv.split(',') if p.task_stack_csv else []
+        # Get dates of each task:
+        p_row["dates_tasks"] = p.extra_json.get("dates_tasks", [])
+        dashboard_row[p.user.username] = p_row
+    return render(request, "admin/admin_dashboard4kids.html", {
+        "dashboard_data": dashboard_row,
+        "total_participants": total_participants,
+    })   

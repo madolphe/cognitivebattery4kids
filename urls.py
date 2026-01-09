@@ -11,5 +11,6 @@ urlpatterns = [
     path('workingmemory_app', views.workingmemory_task4kids, name='workingmemory_app'),
     path('cognitive_task4kids', views.cognitive_task4kids, name='cognitive_task4kids'),
     path('exit_view_cognitive_task4kids', views.exit_view_cognitive_task4kids, name='exit_cognitive_task4kids'),
-    path('admin_change_screen_size', views.admin_change_screen_size, name='admin_change_screen_size')
+    path('admin_change_screen_size', views.admin_change_screen_size, name='admin_change_screen_size'),
+    path('admin_dashboard4kids', views.admin_dashboard4kids, name='admin_dashboard4kids')
 ]
