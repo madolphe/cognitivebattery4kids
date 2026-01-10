@@ -6,14 +6,23 @@
 <div class="card card-xl">
   <h1>Dashboard participants</h1>
   <p>Total participants : {{ total_participants }}</p>
-
+    <div class="task-badges">
+    {% for task in all_tasks %}
+        <span class="badge badge-muted">
+        T{{ forloop.counter }} - {{ task }}
+        </span>
+        {% if not forloop.last %} ► {% endif %}
+    {% endfor %}
+    </div>
   <table class="admin-table">
     <thead>
       <tr>
         <th>Participant</th>
         <th>Inscription</th>
         <th>Statut</th>
-        <th>Tâches restantes</th>
+        {% for task in all_tasks %}
+            <th class="center">T{{ forloop.counter }}</th>
+        {% endfor %}
         <th>Durées tâches (min)</th>
         <th>Dates tâches</th>
       </tr>
@@ -24,13 +33,24 @@
       <tr>
         <td><strong>{{ username }}</strong></td>
 
-        <td>
-          {% if row.inscription_date %}
-            {{ row.inscription_date }}
-          {% else %}
-            No date
-          {% endif %}
-        </td>
+    <td>
+    {% if row.inscription_date %}
+        <div class="dates-tooltip-wrapper">
+        <span class="inscription-date">
+            {{ row.inscription_date|date:"d/m/y" }}
+        </span>
+
+        <div class="dates-tooltip">
+            <div class="dates-tooltip-item">
+            Inscription à {{ row.inscription_date|date:"H:i" }}
+            </div>
+        </div>
+        </div>
+    {% else %}
+        <span class="muted">—</span>
+    {% endif %}
+    </td>
+
 
         <td>
           {% if row.completed == 1 %}
@@ -41,40 +61,50 @@
             <span class="badge badge-muted">En cours</span>
           {% endif %}
         </td>
-        <td>
-          {% if row.remaining_tasks and row.remaining_tasks|length > 0 %}
-            <ul class="compact-list">
-              {% for rt in row.remaining_tasks %}
-                <li>{{ rt }}</li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <span class="muted">Aucune</span>
-          {% endif %}
+        {% for task in all_tasks %}
+            <td class="center">
+            {% if task in row.remaining_tasks %}
+                <span class="task-bad">✗</span>
+            {% else %}
+                <span class="task-ok">✓</span>
+            {% endif %}
+            </td>
+        {% endfor %}
         </td>
         <td>
           {% if row.tasks_duration and row.tasks_duration|length > 0 %}
             <div class="pill-list">
               {% for d in row.tasks_duration %}
-                <span class="pill">{{ d }}</span>
+                <span class="pill">{{d|floatformat:2}}</span>
               {% endfor %}
             </div>
           {% else %}
             <span class="muted">—</span>
           {% endif %}
         </td>
-
         <td>
-          {% if row.dates_tasks and row.dates_tasks|length > 0 %}
-            <ul class="compact-list">
-              {% for dt in row.dates_tasks %}
-                <li>{{ dt }}</li>
-              {% endfor %}
-            </ul>
-          {% else %}
+        {% if row.dates_tasks and row.dates_tasks|length > 0 %}
+            {% with last=row.dates_tasks|last %}
+            <div class="dates-tooltip-wrapper">
+                <div class="dates-compact">
+                <span class="dates-last">{{ last|date:"d/m/y – H:i" }}</span>
+                <span class="dates-count">×{{ row.dates_tasks|length }}</span>
+                </div>
+
+                <div class="dates-tooltip">
+                {% for dt in row.dates_tasks %}
+                    <div class="dates-tooltip-item">
+                    {{ dt|date:"d/m/y – H:i" }}
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+            {% endwith %}
+        {% else %}
             <span class="muted">—</span>
-          {% endif %}
+        {% endif %}
         </td>
+
       </tr>
       {% endfor %}
     </tbody>

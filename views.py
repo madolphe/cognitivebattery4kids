@@ -20,7 +20,6 @@ from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.utils.dateparse import parse_datetime
 
-
 import random 
 import copy 
 
@@ -210,13 +209,14 @@ def admin_dashboard4kids(request):
     participants = ParticipantProfile.objects.filter(study=study)
     total_participants = participants.count()
     dashboard_row = {}
+    all_tasks = ["general-tutorial", "screen-size-params", "moteval","ufov","memorability1", "workingmemory","memorability2"]
     for p in participants:
         p_row = {}
         # Get tasks duration from extra_json
         tasks_duration = p.extra_json.get("tasks_duration", [])
         p_row["tasks_duration"] = tasks_duration
         # Check for completion
-        if len(p.task_stack_csv.split(','))==0:
+        if p.task_stack_csv == "":
             completed = 1
             if len(tasks_duration) < 5:
                 completed = 0
@@ -224,13 +224,24 @@ def admin_dashboard4kids(request):
             completed = -1
         p_row["completed"] = completed
         # Get inscription date
-        p_row["inscription_date"] = p.extra_json.get("origin_timestamp", "No date")
+        p_row["inscription_date"] = p.origin_timestamp
         # Get remaining tasks
-        p_row["remaining_tasks"] = p.task_stack_csv.split(',') if p.task_stack_csv else []
+        task_stack = p.task_stack_csv.split(",") if p.task_stack_csv else []
+        task_stack = [t.strip() for t in task_stack if t.strip()]
+        p_row["remaining_tasks"] = task_stack
         # Get dates of each task:
-        p_row["dates_tasks"] = p.extra_json.get("dates_tasks", [])
+        p_row["dates_tasks"] = format_dates(p.extra_json.get("dates_tasks", []))
         dashboard_row[p.user.username] = p_row
     return render(request, "admin/admin_dashboard4kids.html", {
         "dashboard_data": dashboard_row,
         "total_participants": total_participants,
+        "all_tasks": all_tasks
     })   
+
+def format_dates(raw_dates):
+    parsed_dates = []
+    for d in raw_dates:
+        dt = parse_datetime(d)
+        if dt is not None:
+            parsed_dates.append(dt)
+    return parsed_dates
