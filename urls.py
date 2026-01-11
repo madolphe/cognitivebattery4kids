@@ -12,5 +12,9 @@ urlpatterns = [
     path('cognitive_task4kids', views.cognitive_task4kids, name='cognitive_task4kids'),
     path('exit_view_cognitive_task4kids', views.exit_view_cognitive_task4kids, name='exit_cognitive_task4kids'),
     path('admin_change_screen_size', views.admin_change_screen_size, name='admin_change_screen_size'),
-    path('admin_dashboard4kids', views.admin_dashboard4kids, name='admin_dashboard4kids')
+    path('admin_dashboard4kids', views.admin_dashboard4kids, name='admin_dashboard4kids'),
+    path('admin_export', views.admin_export, name='admin_export'),
+    path('admin_export_participant_csv', views.admin_export_participant_csv, name='admin_export_participant_csv'),
+    path('admin_export/<str:task_name>', views.admin_export_task_csv, name='admin_export_task_csv'),
+
 ]

@@ -19,10 +19,16 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.utils.dateparse import parse_datetime
+from django.http import HttpResponseNotAllowed, StreamingHttpResponse, Http404
+from django.db.models import OuterRef, Subquery
+from django.db.models.functions import Cast
+from django.db.models import CharField
+from pathlib import Path
+from django.conf import settings
 
 import random 
 import copy 
-
+import csv
 # Let's define several views for each new task in the study:
 
 @never_cache
@@ -245,3 +251,167 @@ def format_dates(raw_dates):
         if dt is not None:
             parsed_dates.append(dt)
     return parsed_dates
+    
+
+@user_passes_test(is_admin_team, login_url="admin_login")
+def admin_export(request):
+    """
+    Page admin (GET) avec boutons de téléchargement.
+    """
+    if request.method != "GET":
+        return HttpResponseNotAllowed(["GET"])
+    export_tasks_name = ["moteval","ufov","memorability_1", "workingmemory","memorability_2"]
+    return render(request, "admin/admin_export.html", {"export_tasks_name": export_tasks_name})
+
+
+class _Echo:
+    """
+    Helper pour StreamingHttpResponse: csv.writer a besoin d'un objet
+    avec une méthode write(), et on renvoie directement la valeur.
+    """
+    def write(self, value):
+        return value
+
+
+@user_passes_test(is_admin_team, login_url="admin_login")
+def admin_export_participant_csv(request):
+    """
+    Endpoint POST qui stream un CSV.
+    La logique de récupération de données viendra plus tard.
+    """
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+    study = _get_user_study(request.user)
+    # Sous-requête: la value de la réponse pour CE participant
+    screen_params_sq = (
+        Answer.objects
+        .filter(participant=OuterRef("pk"), question__handle="prof-mot-1")
+        .values("value")[:1]
+    )
+    qs = (
+        ParticipantProfile.objects
+        .filter(study=study)
+        .annotate(screen_params=Subquery(screen_params_sq))
+        .select_related("user", "study")
+        .order_by("id")
+        .values_list("id", "user__username", "origin_timestamp", "screen_params")
+    )
+    # Nom de fichier: stable et explicite
+    ts = timezone.now().strftime("%Y%m%d-%H%M%S")
+    filename = f"export-{ts}.csv"
+
+    pseudo_buffer = _Echo()
+    writer = csv.writer(pseudo_buffer)
+
+    # TODO: Remplacer par ta logique
+    # Exemple minimal: header + quelques lignes
+    def row_generator():
+        yield writer.writerow([
+            "participant_id",
+            "username",
+            "origin_timestamp",            
+            "screen_size"
+        ])
+
+        for pid, username, origin_ts, screen_params in qs.iterator(chunk_size=5000):
+            yield writer.writerow([
+                pid,
+                username or "",
+                origin_ts.isoformat() if origin_ts else "",
+                screen_params or ""
+            ])
+
+    response = StreamingHttpResponse(
+        streaming_content=row_generator(),
+        content_type="text/csv; charset=utf-8",
+    )
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+    return response
+
+@user_passes_test(is_admin_team, login_url="admin_login")   
+def admin_export_task_csv(request, task_name):
+    """
+    POST endpoint that streams a CSV for a given cognitive task results.
+    """
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+    study = _get_user_study(request.user)
+    
+    # Get keys from config file
+    try:
+        cfg = _load_admin_tasks_results_config()
+    except (FileNotFoundError, ValueError, json.JSONDecodeError) as e:
+        raise Http404(f"Config export invalide: {e}")
+
+    keys = cfg.get(task_name)
+    if not keys:
+        # task_name inconnu ou liste vide
+        raise Http404(f"Aucune configuration de colonnes trouvée pour task_name='{task_name}'.")
+
+    if not isinstance(keys, list) or not all(isinstance(k, str) for k in keys):
+        raise Http404(f"Configuration invalide pour task_name='{task_name}' (liste de strings attendue).")
+
+    task = CognitiveTask.objects.get(name=task_name)
+    qs = (
+        CognitiveResult.objects
+        .filter(cognitive_task=task, participant__study=study)
+        .select_related("participant", "cognitive_task")
+        .order_by("id")
+        .values_list("participant__id", "participant__user__username", "idx", "results")
+    )
+    # Nom de fichier: stable et explicite
+    ts = timezone.now().strftime("%Y%m%d-%H%M%S")
+    filename = f"export-{task_name}-{ts}.csv"
+
+    pseudo_buffer = _Echo()
+    writer = csv.writer(pseudo_buffer)
+
+    def row_generator():
+            # Header
+            yield writer.writerow(["participant_id", "username", "idx", *keys])
+
+            for pid, username, idx, results in qs.iterator(chunk_size=2000):
+                results = results or {}
+                # Si results n'est pas un dict (cas rare), on évite de planter
+                if not isinstance(results, dict):
+                    results = {}
+
+                yield writer.writerow([
+                    pid,
+                    username or "",
+                    idx,
+                    *[results.get(k, "") for k in keys]
+                ])
+
+    response = StreamingHttpResponse(
+        streaming_content=row_generator(),
+        content_type="text/csv; charset=utf-8",
+    )
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+    return response
+
+
+# Cache simple en mémoire (évite de relire le fichier à chaque requête)
+_ADMIN_TASKS_CACHE = None
+def _load_admin_tasks_results_config() -> dict:
+    """
+    Charge config/admin_tasks_results.json et retourne un dict.
+    Mise en cache mémoire (process) pour limiter l'I/O.
+    """
+    global _ADMIN_TASKS_CACHE
+    if _ADMIN_TASKS_CACHE is not None:
+        return _ADMIN_TASKS_CACHE
+
+    config_path = Path(__file__).resolve().parent / "config" / "admin_tasks_results.json"
+
+    if not config_path.exists():
+        raise FileNotFoundError(f"Config introuvable: {config_path}")
+
+    with config_path.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    if not isinstance(data, dict):
+        raise ValueError("admin_tasks_results.json doit contenir un objet JSON (dict).")
+
+    _ADMIN_TASKS_CACHE = data
+    return data

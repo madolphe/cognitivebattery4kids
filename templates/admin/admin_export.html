@@ -1,0 +1,24 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block title %}Admin – Exports{% endblock %}
+
+{% block content %}
+<div class="card card-md">
+  <h1>Exports</h1>
+  <p>Télécharger des extraits de la base. Les exports sont streamés (CSV).</p>
+
+  <div class="export-actions">
+    <form method="post" action="{% url 'admin_export_participant_csv' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn">Données participant</button>
+    </form>
+    {% for task in export_tasks_name %}
+    <form method="post" action="{% url 'admin_export_task_csv' task %}">
+      {% csrf_token %}
+      <button type="submit" class="btn">{{task}}</button>
+    </form>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
