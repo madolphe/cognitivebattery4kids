@@ -29,8 +29,8 @@ if(language_code==='fr'){
     text_tutorial_1_0 = "Certaines images vont apparaître deux fois, et les autres une seule fois.";
     text_tutorial_1_1 = "Dès que tu vois une image que tu as déjà vue, " ;
     text_tutorial_1_2 = "appuie sur la touche [J] le plus vite possible." ;
-    text_tutorial_2_0 = "À chaque essai, tu recevras un petit retour :" ;
-    text_tutorial_2_1 =  "un rond bleu si ta réponse est correcte, une croix rouge si elle ne l’est pas." ;
+    text_tutorial_2_0 = "Si tu cliques tu recevras un petit retour." ;
+    text_tutorial_2_1 =  "Ce symbole indique que ta réponse est bien enregistrée." ;
 
     text_tutorial_3_0 = "Commençons les essais." ;
     text_tutorial_4_0 = "Commençons l'expérience principale." ;
