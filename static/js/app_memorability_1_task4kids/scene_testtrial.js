@@ -40,7 +40,7 @@ function scene_fixation() {
 //scene 2
 function scene_stim() {
   Time.count();
-
+  // save click:
   if (keyIsPressed) {
     if (keyCode === keyRes1) {
       Time.count_response();
@@ -135,6 +135,13 @@ function scene_stim() {
 //scene 3
 function scene_feedback() {
   Time.count();
+  // save click:
+  if (keyIsPressed) {
+    if (keyCode === keyRes1) {
+      Time.count_response();
+      Params.tmp_res_ob = 1;
+    }
+  }
   if (Time.activetime_block < time_feedback) {
     if (Params.tmp_res_ob == 1) {
       push();
@@ -146,22 +153,6 @@ function scene_feedback() {
       );
       pop();
     }
-    // if (Params.flag_correct ==true) {
-    //   push();
-    //   noFill();
-    //   stroke(col_correct);
-    //   strokeWeight(width_feedback);
-    //   ellipse(Pos.center_x, Pos.center_y, size_feedback, size_feedback);
-    //   pop();
-    // } else {
-    //   push();
-    //   noFill();
-    //   stroke(col_wrong);
-    //   strokeWeight(width_feedback);
-    //   line(Pos.center_x - len_feedback, Pos.center_y+ len_feedback, Pos.center_x + len_feedback, Pos.center_y - len_feedback);
-    //   line(Pos.center_x- len_feedback, Pos.center_y - len_feedback, Pos.center_x + len_feedback, Pos.center_y + len_feedback);
-    //   pop();
-    // }
   } else {
     Time.update();
   }
@@ -222,4 +213,3 @@ function quit_task() {
       //
   */
 }
-
